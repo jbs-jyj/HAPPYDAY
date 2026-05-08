@@ -1,18 +1,48 @@
-async function searchBooks() {
+async function getHoliday() {
 
-  const keyword =
-    document.getElementById("keyword").value;
+  const year =
+    document.getElementById("year").value;
+
+  const month =
+    document.getElementById("month").value;
 
   const url =
-    `https://apis.data.go.kr/9720000/searchservice/basic?serviceKey=ad45fb2710a84c1d182b19ee083b656290d8d385860bd75c7c1ac35d83ad195c&kwd=${encodeURIComponent(keyword)}`;
+    `https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo` +
+    `?serviceKey=네인증키` +
+    `&solYear=${year}` +
+    `&solMonth=${month}` +
+    `&_type=json`;
 
   try {
 
     const response = await fetch(url);
 
-    const text = await response.text();
+    const data = await response.json();
 
-    document.getElementById("result").innerHTML = text;
+    const items =
+      data.response.body.items.item;
+
+    let html = "";
+
+    if (!items) {
+
+      html = "<p>공휴일 없음</p>";
+
+    } else {
+
+      items.forEach(item => {
+
+        html += `
+          <div class="item">
+            <h3>${item.dateName}</h3>
+            <p>${item.locdate}</p>
+          </div>
+        `;
+      });
+    }
+
+    document.getElementById("result").innerHTML =
+      html;
 
   } catch(error) {
 
