@@ -17,7 +17,13 @@ async function getHoliday() {
 
     const response = await fetch(url);
 
-    const data = await response.json();
+    const text = await response.text();
+
+    console.log(text);
+
+    const data = JSON.parse(text);
+
+    console.log(data);
 
     const items =
       data.response.body.items.item;
@@ -48,6 +54,6 @@ async function getHoliday() {
 
     console.error(error);
 
-    alert("오류 발생");
+    alert(error);
   }
 }
