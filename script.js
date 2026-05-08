@@ -1,4 +1,4 @@
-async function getHoliday() {
+async function searchHoliday() {
 
   const year =
     document.getElementById("year").value;
@@ -6,12 +6,14 @@ async function getHoliday() {
   const month =
     document.getElementById("month").value;
 
+  const serviceKey =
+    "네일반인증키붙여넣기";
+
   const url =
     `https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo` +
-    `?serviceKey=ad45fb2710a84c1d182b19ee083b656290d8d385860bd75c7c1ac35d83ad195c` +
+    `?serviceKey=${serviceKey}` +
     `&solYear=${year}` +
-    `&solMonth=${month}` +
-    `&_type=json`;
+    `&solMonth=${month}`;
 
   try {
 
@@ -19,41 +21,39 @@ async function getHoliday() {
 
     const text = await response.text();
 
-    console.log(text);
+    const parser = new DOMParser();
 
-    const data = JSON.parse(text);
-
-    console.log(data);
+    const xml =
+      parser.parseFromString(text, "text/xml");
 
     const items =
-      data.response.body.items.item;
+      xml.getElementsByTagName("item");
 
-    let html = "";
+    const result =
+      document.getElementById("result");
 
-    if (!items) {
+    result.innerHTML = "";
 
-      html = "<p>공휴일 없음</p>";
+    for (let item of items) {
 
-    } else {
+      const name =
+        item.getElementsByTagName("dateName")[0]?.textContent;
 
-      items.forEach(item => {
+      const date =
+        item.getElementsByTagName("locdate")[0]?.textContent;
 
-        html += `
-          <div class="item">
-            <h3>${item.dateName}</h3>
-            <p>${item.locdate}</p>
-          </div>
-        `;
-      });
+      result.innerHTML += `
+        <div class="card">
+          <h3>${name}</h3>
+          <p>${date}</p>
+        </div>
+      `;
     }
-
-    document.getElementById("result").innerHTML =
-      html;
 
   } catch(error) {
 
     console.error(error);
 
-    alert(error);
+    alert("오류 발생");
   }
 }
