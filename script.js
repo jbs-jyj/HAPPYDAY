@@ -7,7 +7,7 @@ async function searchHoliday() {
     document.getElementById("month").value;
 
   const serviceKey =
-    "네일반인증키붙여넣기";
+    "ad45fb2710a84c1d182b19ee083b656290d8d385860bd75c7c1ac35d83ad195c";
 
   const url =
     `https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo` +
