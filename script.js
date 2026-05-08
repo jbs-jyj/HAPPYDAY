@@ -8,7 +8,7 @@ async function getHoliday() {
 
   const url =
     `https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo` +
-    `?serviceKey=네인증키` +
+    `?serviceKey=ad45fb2710a84c1d182b19ee083b656290d8d385860bd75c7c1ac35d83ad195c` +
     `&solYear=${year}` +
     `&solMonth=${month}` +
     `&_type=json`;
