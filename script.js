@@ -1,32 +1,22 @@
-// 🌙 다크모드 기능
-function toggleMode() {
-  document.body.classList.toggle("dark");
-
-  if (document.body.classList.contains("dark")) {
-    document.body.style.background = "#121212";
-    document.querySelector(".container").style.background = "#1e1e1e";
-    document.querySelector(".container").style.color = "white";
-  } else {
-    document.body.style.background =
-      "linear-gradient(135deg, #ff9a9e, #fad0c4)";
-    document.querySelector(".container").style.background = "white";
-    document.querySelector(".container").style.color = "black";
-  }
+function toggleDarkMode() {
+  document.body.classList.toggle("dark-mode");
 }
 
-async function searchHoliday() {
+async function searchHolidays() {
 
   const year = document.getElementById("year").value;
   const month = document.getElementById("month").value;
+  const result = document.getElementById("result");
 
-  const serviceKey =
-    encodeURIComponent("여기에_인증키");
+  result.innerHTML = "";
+
+  const serviceKey = "";ad45fb2710a84c1d182b19ee083b656290d8d385860bd75c7c1ac35d83ad195c
 
   const url =
-    `https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo` +
-    `?serviceKey=${serviceKey}` +
-    `&solYear=${year}` +
-    `&solMonth=${month}`;
+    `https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getHoliDeInfo?`
+    + `serviceKey=${serviceKey}`
+    + `&solYear=${year}`
+    + `&solMonth=${month.padStart(2,'0')}`;
 
   try {
 
@@ -35,41 +25,34 @@ async function searchHoliday() {
 
     const parser = new DOMParser();
     const xml = parser.parseFromString(text, "text/xml");
-
     const items = xml.getElementsByTagName("item");
-    const result = document.getElementById("result");
 
-    result.innerHTML = "";
-
-    const today = new Date();
-    const todayStr =
-      today.getFullYear().toString() +
-      String(today.getMonth() + 1).padStart(2, '0') +
-      String(today.getDate()).padStart(2, '0');
+    const today = new Date().toISOString().slice(0,10).replace(/-/g,"");
 
     for (let item of items) {
 
-      const name =
-        item.getElementsByTagName("dateName")[0]?.textContent;
+      const name = item.getElementsByTagName("dateName")[0].textContent;
+      const date = item.getElementsByTagName("locdate")[0].textContent;
 
-      const date =
-        item.getElementsByTagName("locdate")[0]?.textContent;
+      let image = "https://source.unsplash.com/400x300/?korea";
 
-      let todayClass = "";
+      if (name.includes("어린이")) image = "https://source.unsplash.com/400x300/?children";
+      if (name.includes("설")) image = "https://source.unsplash.com/400x300/?newyear,korea";
+      if (name.includes("추석")) image = "https://source.unsplash.com/400x300/?moon,festival";
 
-      if (date === todayStr) {
-        todayClass = "today";
-      }
+      const isToday = date === today;
 
       result.innerHTML += `
-        <div class="card ${todayClass}">
-          <h2>${name}</h2>
-          <p>📆 ${date}</p>
+        <div class="card ${isToday ? 'today' : ''}">
+          <img src="${image}">
+          <h3>${name}</h3>
+          <p>${date}</p>
         </div>
       `;
     }
 
-  } catch(error) {
+  } catch (error) {
+    alert("API 오류 발생");
     console.error(error);
   }
 }
