@@ -1,7 +1,17 @@
-function toggleDarkMode() {
-  document.body.classList.toggle("dark-mode");
-}
+async function searchHolidays() {
 
+  const year = document.getElementById("year").value;
+  let month = document.getElementById("month").value;
+  const result = document.getElementById("result");
+
+  if (!year || !month) {
+    alert("년도와 월을 입력하세요!");
+    return;
+  }
+
+  month = month.padStart(2, '0');
+
+  result.innerHTML = "";
 async function searchHolidays() {
 
   const year = document.getElementById("year").value;
