@@ -1,3 +1,7 @@
+function toggleDarkMode() {
+  document.body.classList.toggle("dark-mode");
+}
+
 async function searchHolidays() {
 
   const year = document.getElementById("year").value;
@@ -12,13 +16,6 @@ async function searchHolidays() {
   month = month.padStart(2, '0');
 
   result.innerHTML = "";
-async function searchHolidays() {
-
-  const year = document.getElementById("year").value;
-  const month = document.getElementById("month").value;
-  const result = document.getElementById("result");
-
-  result.innerHTML = "";
 
   const serviceKey = "ad45fb2710a84c1d182b19ee083b656290d8d385860bd75c7c1ac35d83ad195c";
 
@@ -26,7 +23,7 @@ async function searchHolidays() {
     `https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getHoliDeInfo?`
     + `serviceKey=${encodeURIComponent(serviceKey)}`
     + `&solYear=${year}`
-    + `&solMonth=${month.padStart(2,'0')}`;
+    + `&solMonth=${month}`;
 
   try {
 
