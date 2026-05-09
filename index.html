@@ -2,23 +2,29 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>대한민국 공휴일 조회</title>
+  <title>🌈 공휴일 검색 서비스</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>대한민국 공휴일 조회</h1>
+  <div class="container">
 
-  <input id="year" placeholder="연도">
-  <input id="month" placeholder="월">
-  
-  <button onclick="searchHoliday()">
-    검색
-  </button>
+    <button class="mode-btn" onclick="toggleMode()">
+      🌙 다크모드
+    </button>
 
-  <div id="result"></div>
+    <h1>📅 대한민국 공휴일 검색</h1>
+
+    <div class="search-box">
+      <input type="number" id="year" placeholder="연도 (예: 2025)">
+      <input type="number" id="month" placeholder="월 (01~12)">
+      <button onclick="searchHoliday()">검색</button>
+    </div>
+
+    <div id="result"></div>
+
+  </div>
 
   <script src="script.js"></script>
-
 </body>
 </html>
