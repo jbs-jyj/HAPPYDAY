@@ -10,11 +10,11 @@ async function searchHolidays() {
 
   result.innerHTML = "";
 
-  const serviceKey = "";ad45fb2710a84c1d182b19ee083b656290d8d385860bd75c7c1ac35d83ad195c
+  const serviceKey = "ad45fb2710a84c1d182b19ee083b656290d8d385860bd75c7c1ac35d83ad195c";
 
   const url =
     `https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getHoliDeInfo?`
-    + `serviceKey=${serviceKey}`
+    + `serviceKey=${encodeURIComponent(serviceKey)}`
     + `&solYear=${year}`
     + `&solMonth=${month.padStart(2,'0')}`;
 
@@ -37,8 +37,8 @@ async function searchHolidays() {
       let image = "https://source.unsplash.com/400x300/?korea";
 
       if (name.includes("어린이")) image = "https://source.unsplash.com/400x300/?children";
-      if (name.includes("설")) image = "https://source.unsplash.com/400x300/?newyear,korea";
-      if (name.includes("추석")) image = "https://source.unsplash.com/400x300/?moon,festival";
+      if (name.includes("설")) image = "https://source.unsplash.com/400x300/?newyear";
+      if (name.includes("추석")) image = "https://source.unsplash.com/400x300/?moon";
 
       const isToday = date === today;
 
