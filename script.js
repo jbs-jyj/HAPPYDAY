@@ -34,25 +34,15 @@ async function searchHolidays() {
     const xml = parser.parseFromString(text, "text/xml");
     const items = xml.getElementsByTagName("item");
 
-    if (items.length === 0) {
-      result.innerHTML = "<p>검색 결과가 없습니다.</p>";
-      return;
-    }
-
-    const today = new Date()
-      .toISOString()
-      .slice(0, 10)
-      .replace(/-/g, "");
+    const today = new Date().toISOString().slice(0,10).replace(/-/g,"");
 
     for (let item of items) {
 
       const name = item.getElementsByTagName("dateName")[0].textContent;
       const date = item.getElementsByTagName("locdate")[0].textContent;
 
-      // 기본 이미지
       let image = "https://picsum.photos/400/300";
 
-      // 공휴일별 이미지
       if (name.includes("어린이")) image = "https://source.unsplash.com/400x300/?children";
       if (name.includes("설")) image = "https://source.unsplash.com/400x300/?korea,newyear";
       if (name.includes("추석")) image = "https://source.unsplash.com/400x300/?moon";
