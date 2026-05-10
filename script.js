@@ -4,26 +4,27 @@ function toggleDarkMode() {
 
 async function searchHolidays() {
 
-  const year = document.getElementById("year").value;
-  let month = document.getElementById("month").value;
-  const result = document.getElementById("result");
+  try {
 
-  if (!year || !month) {
-    alert("년도와 월을 입력하세요!");
-    return;
-  }
+    const year = document.getElementById("year").value;
+    let month = document.getElementById("month").value;
+    const result = document.getElementById("result");
 
-  month = month.padStart(2, '0');
+    if (!year || !month) {
+      alert("년도와 월을 입력하세요!");
+      return;
+    }
 
-  result.innerHTML = "";
+    month = month.padStart(2, '0');
+    result.innerHTML = "";
 
-const serviceKey = "ad45fb2710a84c1d182b19ee083b656290d8d385860bd75c7c1ac35d83ad195c";
+    const serviceKey = "ad45fb2710a84c1d182b19ee083b656290d8d385860bd75c7c1ac35d83ad195c";
 
-const url =
-  "https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getHoliDeInfo?serviceKey="
-  + serviceKey
-  + "&solYear=" + year
-  + "&solMonth=" + month;
+    const url =
+      "https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getHoliDeInfo?serviceKey="
+      + serviceKey
+      + "&solYear=" + year
+      + "&solMonth=" + month;
 
     const response = await fetch(url);
     const text = await response.text();
